@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img">
+  <title>SaleKit</title>
+  <defs>
+    <linearGradient id="background" x1="12" y1="8" x2="52" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6" />
+      <stop offset="1" stop-color="#1D4ED8" />
+    </linearGradient>
+  </defs>
+
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#background)" />
+  <path
+    d="M20 15.5A3.5 3.5 0 0 1 23.5 12h17A3.5 3.5 0 0 1 44 15.5V51l-4-2.75L36 51l-4-2.75L28 51l-4-2.75L20 51V15.5Z"
+    fill="#fff"
+  />
+  <path d="M26 22h12M26 29h12M26 36h7" fill="none" stroke="#2563EB" stroke-width="3" stroke-linecap="round" />
+  <circle cx="38.5" cy="36" r="2.5" fill="#16A34A" />
+</svg>
