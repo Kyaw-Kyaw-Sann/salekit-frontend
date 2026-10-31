@@ -36,3 +36,32 @@ export type ResetPasswordData = {
   otp: string
   newPassword: string
 }
+
+export type Product = {
+  id: string
+  name: string
+  price: number
+  category: string
+  stock: number
+}
+
+export type ProductFormData = {
+  name: string
+  price: number
+  category: string
+  stock: number
+}
+
+export type AdminUser = {
+  id: string
+  name: string
+  email: string
+  role: UserRole
+  isVerified: boolean
+}
+
+export type AdminStats = {
+  totalUsers: number
+  verifiedUsers: number
+  totalProducts: number
+}

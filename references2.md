@@ -186,6 +186,21 @@ export type ResetPasswordData = {
   newPassword: string
 }
 
+export type Product = {
+  id: string
+  name: string
+  price: number
+  category: string
+  stock: number
+}
+
+export type ProductFormData = {
+  name: string
+  price: number
+  category: string
+  stock: number
+}
+
 //////////////////////////////////////////////////
 
 >>>> authApi.ts
@@ -282,6 +297,12 @@ export async function resetPassword(
 
   return response.message
 }
+
+////////////////////////////////////////////////
+
+>>>> productsApi.ts
+
+
 
 ////////////////////////////////////////////////
 

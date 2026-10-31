@@ -10,13 +10,21 @@ import Signup from "./pages/auth/Signup";
 import VerifyEmail from "./pages/auth/VerifyEmail";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import ProductList from "./pages/products/ProductList";
+import ProductCreate from "./pages/products/ProductCreate";
+import ProductDetail from "./pages/products/ProductDetail";
+import ProductEdit from "./pages/products/ProductEdit";
+import Dashboard from "./pages/Dashboard";
+import AdminRoutes from "./components/AdminRoutes";
+import AdminStats from "./pages/admin/AdminStats";
+import AdminUsers from "./pages/admin/AdminUsers";
 
 function App() {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [authLoading, setAuthLoading] = useState(true); // as this page is automatically run
-  
+
   const [verificationEmail, setVerificationEmail] = useState("");
 
   useEffect(() => {
@@ -141,14 +149,18 @@ function App() {
         >
           <Route
             path="/"
-            element={
-              <section>
-                <h1 className="text-2xl font-bold text-heading">Dashboard</h1>
-
-                <p className="mt-2 text-body">Welcome, {currentUser?.name}</p>
-              </section>
-            }
+            element={<Dashboard userName={currentUser?.name ?? "User"} />}
           />
+          <Route path="/products" element={<ProductList />} />
+          <Route path="/products/new" element={<ProductCreate />} />
+          <Route path="/products/:productId/edit" element={<ProductEdit />} />
+          <Route path="/products/:productId" element={<ProductDetail />} />
+
+          <Route element={<AdminRoutes currentUser={currentUser} />}>
+  <Route path="/admin" element={<AdminStats />} />
+  <Route path="/admin/users" element={<AdminUsers />} />
+
+</Route>
         </Route>
       </Route>
 

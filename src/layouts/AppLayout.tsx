@@ -1,33 +1,29 @@
-import { useState } from "react"
-import { NavLink, Outlet } from "react-router-dom"
-import type { AuthUser } from "../types"
+import { useState } from "react";
+import { NavLink, Outlet } from "react-router-dom";
+import type { AuthUser } from "../types";
 
 type AppLayoutProps = {
-  currentUser: AuthUser | null
-  onLogout: () => Promise<void>
-}
+  currentUser: AuthUser | null;
+  onLogout: () => Promise<void>;
+};
 
-function AppLayout({
-  currentUser,
-  onLogout,
-}: AppLayoutProps) {
-  
-  const [isLoggingOut, setIsLoggingOut] = useState(false)
-  const [logoutError, setLogoutError] = useState("")
+function AppLayout({ currentUser, onLogout }: AppLayoutProps) {
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [logoutError, setLogoutError] = useState("");
 
   async function handleLogoutClick() {
     try {
-      setLogoutError("")
-      setIsLoggingOut(true)
+      setLogoutError("");
+      setIsLoggingOut(true);
 
-      await onLogout()
+      await onLogout();
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "Failed to logout"
+        error instanceof Error ? error.message : "Failed to logout";
 
-      setLogoutError(message)
+      setLogoutError(message);
     } finally {
-      setIsLoggingOut(false)
+      setIsLoggingOut(false);
     }
   }
 
@@ -35,10 +31,7 @@ function AppLayout({
     <div className="min-h-screen bg-background">
       <header className="border-b border-border bg-surface">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-          <NavLink
-            to="/"
-            className="text-xl font-bold text-primary"
-          >
+          <NavLink to="/" className="text-xl font-bold text-primary">
             SaleKit
           </NavLink>
 
@@ -49,6 +42,22 @@ function AppLayout({
             >
               Dashboard
             </NavLink>
+
+            <NavLink
+              to="/products"
+              className="text-sm font-medium text-body transition hover:text-primary"
+            >
+              Products
+            </NavLink>
+
+            {currentUser?.role === "admin" && (
+  <NavLink
+    to="/admin"
+    className="text-sm font-medium text-body transition hover:text-primary"
+  >
+    Admin
+  </NavLink>
+)}
 
             {currentUser && (
               <div className="text-right">
@@ -87,7 +96,7 @@ function AppLayout({
         <Outlet />
       </main>
     </div>
-  )
+  );
 }
 
-export default AppLayout
+export default AppLayout;
