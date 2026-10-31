@@ -15,7 +15,8 @@ function App() {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(true); // as this page is automatically run
+  
   const [verificationEmail, setVerificationEmail] = useState("");
 
   useEffect(() => {
@@ -77,7 +78,7 @@ function App() {
   }
 
   if (authLoading) {
-    return <div className="">Loading session...</div>;
+    return <div className="">Loading ...</div>;
   }
 
   return (

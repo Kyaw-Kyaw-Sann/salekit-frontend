@@ -11,6 +11,7 @@ function AppLayout({
   currentUser,
   onLogout,
 }: AppLayoutProps) {
+  
   const [isLoggingOut, setIsLoggingOut] = useState(false)
   const [logoutError, setLogoutError] = useState("")
 
