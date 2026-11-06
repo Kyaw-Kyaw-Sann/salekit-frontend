@@ -5,12 +5,15 @@ import { deleteProduct, getProductById } from "../../api/productsApi";
 import type { Product } from "../../types";
 
 function ProductDetail() {
+
   const { productId } = useParams();
   const navigate = useNavigate();
 
   const [product, setProduct] = useState<Product | null>(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  
   const [deleteError, setDeleteError] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 

@@ -85,6 +85,35 @@ src/
 ├── main.tsx
 └── index.css
 
+src/
+├── api/
+│   ├── productsApi.ts
+│   └── adminApi.ts
+│
+├── components/
+│   └── AdminRoutes.tsx
+│
+├── layouts/
+│   └── AppLayout.tsx
+│
+├── pages/
+│   ├── Dashboard.tsx
+│   │
+│   ├── products/
+│   │   ├── ProductList.tsx
+│   │   ├── ProductCreate.tsx
+│   │   ├── ProductDetail.tsx
+│   │   └── ProductEdit.tsx
+│   │
+│   └── admin/
+│       ├── AdminStats.tsx
+│       └── AdminUsers.tsx
+│
+├── types/
+│   └── index.ts
+│
+└── App.tsx
+
 //////////////////////////////////////////////
 
 >>>> apiClient.ts
@@ -201,6 +230,20 @@ export type ProductFormData = {
   stock: number
 }
 
+export type AdminUser = {
+  id: string
+  name: string
+  email: string
+  role: UserRole
+  isVerified: boolean
+}
+
+export type AdminStats = {
+  totalUsers: number
+  verifiedUsers: number
+  totalProducts: number
+}
+
 //////////////////////////////////////////////////
 
 >>>> authApi.ts
@@ -302,7 +345,66 @@ export async function resetPassword(
 
 >>>> productsApi.ts
 
+import { apiRequest } from "./apiClient"
+import type { Product, ProductFormData } from "../types"
 
+export function getProducts() {
+  return apiRequest<Product[]>("/products")
+}
+
+export function createProduct(productData: ProductFormData) {
+  return apiRequest<Product>("/products", {
+    method: "POST",
+    body: JSON.stringify(productData),
+  })
+}
+
+export function getProductById(productId: string) {
+  return apiRequest<Product>(
+    `/products/${encodeURIComponent(productId)}`,
+  )
+}
+
+export function updateProduct(
+  productId: string,
+  productData: ProductFormData,
+) {
+  return apiRequest<Product>(
+    `/products/${encodeURIComponent(productId)}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(productData),
+    },
+  )
+}
+
+export function deleteProduct(productId: string) {
+  return apiRequest<{ message: string }>(
+    `/products/${encodeURIComponent(productId)}`,
+    {
+      method: "DELETE",
+    },
+  )
+}
+
+////////////////////////////////////////////////
+
+>>>> adminApi.ts
+
+import { apiRequest } from "./apiClient"
+import type { AdminStats, AdminUser } from "../types"
+
+export function getAdminStats() {
+  return apiRequest<AdminStats>("/admin/stats")
+}
+
+export async function getAdminUsers() {
+  const response = await apiRequest<{ users: AdminUser[] }>(
+    "/admin/users",
+  )
+
+  return response.users
+}
 
 ////////////////////////////////////////////////
 
@@ -334,6 +436,31 @@ function ProtectedRoute({
 export default ProtectedRoute
 
 ////////////////////////////////////////////////////////
+
+>>>> AdminRoutes.tsx
+
+import { Navigate, Outlet } from "react-router-dom"
+import type { AuthUser } from "../types"
+
+type AdminRoutesProps = {
+  currentUser: AuthUser | null
+}
+
+function AdminRoutes({ currentUser }: AdminRoutesProps) {
+  if (!currentUser) {
+    return <Navigate to="/login" replace />
+  }
+
+  if (currentUser.role !== "admin") {
+    return <Navigate to="/" replace />
+  }
+
+  return <Outlet />
+}
+
+export default AdminRoutes
+
+///////////////////////////////////////////////////////
 
 >>>> App.tsx
 

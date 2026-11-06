@@ -51,13 +51,13 @@ function AppLayout({ currentUser, onLogout }: AppLayoutProps) {
             </NavLink>
 
             {currentUser?.role === "admin" && (
-  <NavLink
-    to="/admin"
-    className="text-sm font-medium text-body transition hover:text-primary"
-  >
-    Admin
-  </NavLink>
-)}
+              <NavLink
+                to="/admin"
+                className="text-sm font-medium text-body transition hover:text-primary"
+              >
+                Admin
+              </NavLink>
+            )}
 
             {currentUser && (
               <div className="text-right">

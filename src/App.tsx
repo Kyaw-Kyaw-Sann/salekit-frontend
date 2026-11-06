@@ -157,10 +157,9 @@ function App() {
           <Route path="/products/:productId" element={<ProductDetail />} />
 
           <Route element={<AdminRoutes currentUser={currentUser} />}>
-  <Route path="/admin" element={<AdminStats />} />
-  <Route path="/admin/users" element={<AdminUsers />} />
-
-</Route>
+            <Route path="/admin" element={<AdminStats />} />
+            <Route path="/admin/users" element={<AdminUsers />} />
+          </Route>
         </Route>
       </Route>
 
